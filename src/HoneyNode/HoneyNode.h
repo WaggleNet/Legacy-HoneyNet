@@ -6,7 +6,7 @@
 #include "RF24Mesh.h"
 #include <EEPROM.h>
 
-#define RegChannel(X, Y) registerChannel(X, sizeof(Y))
+#define AddChannel(X, Y) registerChannel(X, sizeof(Y))
 #define Send(CH, CONT) publish(CH, (byte*)& CONT)
 #define SendPointer(CH, CONT) publish(CH, (bytes*) CONT)
 #define Print(CH, CONT) publish(CH, CONT)
