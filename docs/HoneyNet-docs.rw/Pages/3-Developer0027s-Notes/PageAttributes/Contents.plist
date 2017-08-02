@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Creator</key>
+	<string></string>
+	<key>SandwichFillings</key>
+	<array>
+		<dict>
+			<key>Dictionary</key>
+			<dict>
+				<key>ChangedStatuses</key>
+				<dict>
+					<key>default</key>
+					<true/>
+					<key>file:///Users/jimmy/Documents/Dev/Github/HoneyNet/docs/</key>
+					<false/>
+				</dict>
+				<key>ColourStyles</key>
+				<dict>
+					<key>Tesla</key>
+					<dict>
+						<key>%colour_content_text%</key>
+						<string>#EEEEEE</string>
+						<key>%colour_links%</key>
+						<string>#3D901F</string>
+						<key>%colour_site_bkg%</key>
+						<string>#000000</string>
+						<key>%colour_sub_current_bkg%</key>
+						<string>#A0A0A0</string>
+						<key>%colour_sub_current_fg%</key>
+						<string>#000000</string>
+						<key>%colour_sub_nav_bkg%</key>
+						<string>#202020</string>
+						<key>%colour_top_current_bkg%</key>
+						<string>#3B9318</string>
+					</dict>
+					<key>Tesla Pro</key>
+					<dict/>
+					<key>Voyager</key>
+					<dict/>
+				</dict>
+				<key>CreditRapidWeaver</key>
+				<true/>
+				<key>CustomCopyrightUsed</key>
+				<false/>
+				<key>CustomSiteTitleUsed</key>
+				<false/>
+				<key>CustomSloganUsed</key>
+				<false/>
+				<key>DefaultLinkTarget</key>
+				<string>self</string>
+				<key>FilenameExtension</key>
+				<string>html</string>
+				<key>FolderName</key>
+				<string>sitemap</string>
+				<key>HasCustomThemeStyle</key>
+				<true/>
+				<key>ImageFormat</key>
+				<string>Original</string>
+				<key>ImageQuality</key>
+				<string>High</string>
+				<key>IndexFilename</key>
+				<string>index.html</string>
+				<key>OutputFormat</key>
+				<string>Default</string>
+				<key>OutputXMLDeclaration</key>
+				<false/>
+				<key>RobotsShouldFollowLinks</key>
+				<true/>
+				<key>RobotsShouldIndexPage</key>
+				<true/>
+				<key>SidebarEnabled</key>
+				<integer>1</integer>
+				<key>SidebarTitle</key>
+				<string></string>
+				<key>TextEncoding</key>
+				<string>utf-8</string>
+				<key>ThemeStyles</key>
+				<dict>
+					<key>Tesla</key>
+					<array>
+						<string>Banner Background.Banner 16</string>
+						<string>Maximum Content Width.960 px</string>
+						<string>Sidebar.Hidden</string>
+					</array>
+					<key>Voyager</key>
+					<array>
+						<string>Banner Height.540 px</string>
+						<string>Body Text.Open Sans</string>
+						<string>Breadcrumb Trail.Translucent White Presets</string>
+						<string>Content Width.870px</string>
+						<string>Headers.Fjalla One</string>
+						<string>Navigation Overlay.Translucent Black</string>
+						<string>Sidebar.Right-hand Side</string>
+						<string>Site Slogan.Fjalla One</string>
+						<string>Site Title Divider.Light</string>
+						<string>Site Title.Fjalla One</string>
+						<string>Theme Toggles.Show Site Title in Navigation Overlay</string>
+						<string>Theme Toggles.Uppercase Site Title</string>
+						<string>Theme Toggles.Uppercase Slogan</string>
+					</array>
+				</dict>
+			</dict>
+			<key>Files</key>
+			<array/>
+			<key>Subsandwiches</key>
+			<array/>
+		</dict>
+	</array>
+	<key>Type</key>
+	<string>Page Attributes</string>
+</dict>
+</plist>
