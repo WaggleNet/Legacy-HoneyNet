@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>http://sample.project.com/index.html</loc>
+	</url>
+	<url>
+		<loc>http://sample.project.com/portfolio/index.html</loc>
+	</url>
+	<url>
+		<loc>http://sample.project.com/portfolio/nature-photos/index.html</loc>
+	</url>
+	<url>
+		<loc>http://sample.project.com/portfolio/railway-photos/index.html</loc>
+	</url>
+	<url>
+		<loc>http://sample.project.com/portfolio/photos/index.html</loc>
+	</url>
+	<url>
+		<loc>http://sample.project.com/portfolio/city-life-photos/index.html</loc>
+	</url>
+	<url>
+		<loc>http://sample.project.com/sitemap/index.html</loc>
+	</url>
+	<url>
+		<loc>http://sample.project.com/sitemap/markdown/index.html</loc>
+	</url>
+	<url>
+		<loc>http://sample.project.com/contact-us/index.php</loc>
+	</url>
+	<url>
+		<loc>http://sample.project.com/about-us/index.html</loc>
+	</url>
+</urlset>
