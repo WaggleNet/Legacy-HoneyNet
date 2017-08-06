@@ -24,4 +24,5 @@ void loop() {
 		print_wifi_info();
 		mqtt_refresh_state();
 	}
+	mqtt_loop();
 }
