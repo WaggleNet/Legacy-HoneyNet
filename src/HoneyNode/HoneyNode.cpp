@@ -35,7 +35,7 @@ void HoneyNode::registerChannel(uint8_t channel, uint8_t size) {
     registry[channel] = size;
 }
 
-uint8_t HoneyNode::write(uint8_t ch, byte *payload, uint8_t len) {
+uint8_t HoneyNode::write(byte *payload, uint8_t ch, uint8_t len) {
     /* Returns:
     - 0: Normal
     - 1: Send failed, test OK
@@ -67,6 +67,11 @@ uint8_t HoneyNode::publish(uint8_t channel, String payload) {
     // Write a string payload
     if (channel >= 64) channel -= 64;
     if (channel >= 32 && channel <= 63)
-        return write(payload.c_str(), channel + 64, payload.length() + 1);
+        return write((byte *)payload.c_str(), channel + 64, payload.length() + 1);
     else return 3;
+}
+
+void HoneyNode::registerHandler(uint8_t channel, handlerFunc callback) {
+    if (channel >=64) channel -= 64;
+    callbacks[channel] = callback;
 }
