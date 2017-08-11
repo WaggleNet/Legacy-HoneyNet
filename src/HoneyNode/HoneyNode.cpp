@@ -6,8 +6,8 @@ HoneyNode::HoneyNode(uint8_t CE_pin, uint8_t CS_pin)
 
 void HoneyNode::begin() {
     serialSetID();
-    Serial.println(F("Connecting to the mesh..."));
-    mesh.begin();
+    Serial.println(F("Connecting..."));
+    mesh.begin(63, RF24_2MBPS);
 }
 
 void HoneyNode::serialSetID() {
@@ -28,6 +28,18 @@ void HoneyNode::serialSetID() {
 
 void HoneyNode::update() {
     mesh.update();
+    while (network.available()) {
+        RF24NetworkHeader header;
+        size_t data_size = network.peek(header);
+        size_t channel_size = registry[header.type - 64];
+        if (channel_size != data_size)
+            Serial.println(F("Warning: Data size mismatch."));
+        byte *payload;
+        payload = new byte[channel_size];
+        network.read(header, payload, channel_size);
+        callbacks[header.type - 64](payload);
+        delete[] payload;
+    }
 }
 
 void HoneyNode::registerChannel(uint8_t channel, uint8_t size) {
@@ -35,7 +47,7 @@ void HoneyNode::registerChannel(uint8_t channel, uint8_t size) {
     registry[channel] = size;
 }
 
-uint8_t HoneyNode::write(byte *payload, uint8_t ch, uint8_t len) {
+uint8_t HoneyNode::write(void *payload, uint8_t ch, uint8_t len) {
     /* Returns:
     - 0: Normal
     - 1: Send failed, test OK
@@ -48,14 +60,14 @@ uint8_t HoneyNode::write(byte *payload, uint8_t ch, uint8_t len) {
       // If a write fails, check connectivity to the mesh network
       if ( ! mesh.checkConnection() ) {
         //refresh the network address
-        Serial.println("Connection lost: Renewing Address");
+        Serial.println("Renewing Address");
         mesh.renewAddress();
         return 2;
       } else return 1;
     } else return 0;
 }
 
-uint8_t HoneyNode::publish(uint8_t channel, byte *payload) {
+uint8_t HoneyNode::publish(uint8_t channel, void *payload) {
     // Writes a binary payload
     if (channel >= 64) channel -= 64;
     if (channel <= 31 && channel >= 0)
@@ -67,7 +79,7 @@ uint8_t HoneyNode::publish(uint8_t channel, String payload) {
     // Write a string payload
     if (channel >= 64) channel -= 64;
     if (channel >= 32 && channel <= 63)
-        return write((byte *)payload.c_str(), channel + 64, payload.length() + 1);
+        return write((void *)payload.c_str(), channel + 64, payload.length() + 1);
     else return 3;
 }
 
