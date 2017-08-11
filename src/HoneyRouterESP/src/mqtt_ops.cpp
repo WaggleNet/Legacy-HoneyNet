@@ -19,7 +19,7 @@ void mqtt_refresh_state() {
             String topic = base_topic + "router/mqtt/status";
             String message = "{\"msg\": \"connected\"}";
             mqclient.publish(topic.c_str(), message.c_str());
-            mqclient.subscribe((base_topic + "#").c_str());
+            mqclient.subscribe((base_topic + "*/*/output").c_str());
         } else {
             Serial.println(F("[MQTT] Connection failed"));
             mqtt_on = 0;

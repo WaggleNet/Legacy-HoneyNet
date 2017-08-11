@@ -7,9 +7,10 @@ RF24Mesh mesh(radio,network);
 uint8_t registry[32];
 
 void radio_init(uint8_t node_id) {
+    radio.setPALevel(RF24_PA_MAX);
     mesh.setNodeID(node_id);
     Serial.println("[Radio] Configuring mesh network...");
-	mesh.begin();
+	mesh.begin(63, RF24_2MBPS);
     Serial.println("[Radio] Mesh network configuration complete");
 }
 
@@ -44,12 +45,14 @@ void radio_update() {
     if(network.available()){
 		RF24NetworkHeader header;
         size_t data_size = network.peek(header);
-		Serial.print("[Radio] Rx Pkt from ");
-        Serial.print(header.from_node);
-        Serial.print(", node ");
-        Serial.print(mesh.getNodeID(header.from_node));
-        Serial.print(", size ");
-        Serial.println(data_size);
+        #ifdef DEBUG
+    		Serial.print("[Radio] Rx Pkt from ");
+            Serial.print(header.from_node);
+            Serial.print(", node ");
+            Serial.print(mesh.getNodeID(header.from_node));
+            Serial.print(", size ");
+            Serial.println(data_size);
+        #endif
         // Assemble memory for MQTT forwarding
         auto topic = generate_topic(mesh.getNodeID(header.from_node), header.type, "status");
         byte *payload;
