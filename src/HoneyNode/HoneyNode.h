@@ -8,7 +8,7 @@
 
 typedef void (* handlerFunc)(void* args);
 
-#define RegChannel(X, Y) registerChannel(X, sizeof(Y))
+#define AddChannel(X, Y) registerChannel(X, sizeof(Y))
 #define Send(CH, CONT) publish(CH, &CONT)
 #define SendPointer(CH, CONT) publish(CH, CONT)
 #define Print(CH, CONT) publish(CH, CONT)
@@ -27,7 +27,7 @@ class HoneyNode {
         void begin();
         void update();
         void registerChannel(uint8_t channel, uint8_t size);
-        void registerHandler(uint8_t channel, handlerFunc callback);
+        void listenTo(uint8_t channel, handlerFunc callback);
         uint8_t publish(uint8_t channel, void *payload);
         uint8_t publish(uint8_t channel, String payload);
     private:

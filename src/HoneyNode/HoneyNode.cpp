@@ -83,7 +83,7 @@ uint8_t HoneyNode::publish(uint8_t channel, String payload) {
     else return 3;
 }
 
-void HoneyNode::registerHandler(uint8_t channel, handlerFunc callback) {
+void HoneyNode::listenTo(uint8_t channel, handlerFunc callback) {
     if (channel >=64) channel -= 64;
     callbacks[channel] = callback;
 }
