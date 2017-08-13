@@ -19,7 +19,7 @@ void mqtt_refresh_state() {
             String topic = base_topic + "router/mqtt/status";
             String message = "{\"msg\": \"connected\"}";
             mqclient.publish(topic.c_str(), message.c_str());
-            mqclient.subscribe((base_topic + "*/*/output").c_str());
+            mqclient.subscribe((base_topic + "*/*/command").c_str());
         } else {
             Serial.println(F("[MQTT] Connection failed"));
             mqtt_on = 0;
@@ -44,6 +44,8 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
     int nodeID = t.substring(startslash + 1, endslash).toInt();
     Serial.print(ch);
     Serial.print(F(", node#"));
-    Serial.println(nodeID);
+    Serial.print(nodeID);
+    Serial.print(", size ");
+    Serial.println(length);
     mesh.write(payload, ch, length, nodeID);
 }

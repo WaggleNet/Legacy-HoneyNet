@@ -4,6 +4,8 @@ RF24 radio(4,5);
 RF24Network network(radio);
 RF24Mesh mesh(radio,network);
 
+#define DEBUG 1
+
 uint8_t registry[32];
 
 void radio_init(uint8_t node_id) {
@@ -61,7 +63,10 @@ void radio_update() {
         if (!isStrChannel(header.type)) {
             // Check consistency
             if (getChannelSize(header.type) != data_size)
-                Serial.print("WARNING: Size inconsistent.");
+                Serial.print("WARNING - Size inconsistent: Expected ");
+                Serial.print(getChannelSize(header.type));
+                Serial.print(", got ");
+                Serial.println(data_size);
         }
         mqclient.publish(topic.c_str(), payload, data_size);
         delete[] payload;
