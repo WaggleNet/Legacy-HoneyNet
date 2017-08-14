@@ -10,3 +10,4 @@ extern String base_topic;
 
 void mqtt_refresh_state();
 void mqtt_callback(char* topic, byte* payload, unsigned int length);
+void mqtt_loop();

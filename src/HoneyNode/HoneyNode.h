@@ -6,9 +6,11 @@
 #include "RF24Mesh.h"
 #include <EEPROM.h>
 
+typedef void (* handlerFunc)(void* args);
+
 #define AddChannel(X, Y) registerChannel(X, sizeof(Y))
-#define Send(CH, CONT) publish(CH, (byte*)& CONT)
-#define SendPointer(CH, CONT) publish(CH, (bytes*) CONT)
+#define Send(CH, CONT) publish(CH, &CONT)
+#define SendPointer(CH, CONT) publish(CH, CONT)
 #define Print(CH, CONT) publish(CH, CONT)
 
 class HoneyNode {
@@ -19,14 +21,16 @@ class HoneyNode {
     uint8_t nodeID;
     // The Middleware
     uint8_t registry[32];
+    handlerFunc callbacks[32];
     public:
         HoneyNode(uint8_t CE_pin, uint8_t CS_pin);
         void begin();
         void update();
         void registerChannel(uint8_t channel, uint8_t size);
-        uint8_t publish(uint8_t channel, byte *payload);
+        void listenTo(uint8_t channel, handlerFunc callback);
+        uint8_t publish(uint8_t channel, void *payload);
         uint8_t publish(uint8_t channel, String payload);
     private:
         void serialSetID();
-        uint8_t write(uint8_t ch, byte *payload, uint8_t len);
+        uint8_t write(void *payload, uint8_t ch, uint8_t len);
 };
