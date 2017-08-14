@@ -1,0 +1,125 @@
+# HoneyNode Documentation
+
+## Getting Started
+
+Setting up a Node is simple. First you need an Arduino, ESP8266 or STM32F103x board connected to an nRF24L01+ radio. Instantiate a node like this:
+
+```C++
+HoneyNode node(9, 10);
+```
+
+Then define your own data structure representing your status and command. Let's use a struct, for example:
+
+```C++
+struct status_t {
+	int16_t humidity;
+	float temperature;
+};
+
+node.AddChannel(1, status_t);
+```
+
+The last line assigns channel 1 with this data structure. To measure and send out the room temperature and humidity every second:
+
+```C++
+uint32_t lastRefreshed = millis();
+status_t status;
+
+void loop() {
+	if (millis() > lastRefreshed) {
+		getHumidityAndTemp(status);
+		node.Send(1, status);
+	}
+	node.update();
+}
+```
+
+That's it! Check the serial monitor of the router or its MQTT output, you'll see your node sending out temperature and humidity every second as a binary struct.
+
+
+## API Reference
+
+
+### `Constructor HoneyNode(ce_pin, cs_pin, channel)`
+
+Instantiates a node with a nRF24L01 radio attached to the SPI bus plus the ce and cs pins.
+
+- **ce_pin**: Arduino pin number connected to radio's `CE` or `EN` pin.
+- **cs_pin**: Arduino pin nmuber connected to radio's `CS` or `CSN` pin.
+- **channel**: Hardware channel representing the **frequency** of communication. **Not to be confused with HoneyNet channels**.
+
+### `begin()`
+
+Begins the operation of the node.
+
+It must be called before anything else is done to the node. Hence, you should call it ASAP in Arduino's `setup()` function.
+
+### `update()`
+
+Refreshes the radio and handle necessary data activities.
+
+Must be called very frequently, preferably at each `loop()` cycle. Should not be blocked by a delay.
+
+### `AddChannel(channel, <variable or type>`
+
+Defines a channel with the specified data type, or the type of the variable passed in. After the definition of a channel, expect payloads you send and receive on this channel to be of this type. 
+
+- **Channel**: One of the typed channels (0-32)
+
+- **Data Type**: Any type that has a fixed size. For a variable sized payload, use string channels. The data type should not occupy more than 120 bytes in memory. 
+
+> **Caveat**
+> 
+> Must be used after you begin a node. Or it will hang. 
+> 
+> A channel **can be redefined** and overridden. However, as the channel definition is global to the network (synced to the router), do not define conflicting channels against other nodes on the same network.
+
+`AddChannel` is a syntactic sugar to `registerChannel`. Under the hood, it uses the `sizeof` function to determine the data size. 
+
+### `Send(channel, variable)`
+
+Sends the value of a variable over the mesh, on the specified channel.
+
+- **Channel**: One of the channels you **have defined** with `AddChannel`.
+- **Variable**: The variable to send. You **need not** put a `&` as you do with other C++ functions. Type of variable should match your channel definition.
+
+> **Caveat**
+> 
+> HoneyNet can't check the correspondence of your data type. A mismatch will result in garbled or truncated data received by the router.
+
+`Send` is a syntactic sugar to `publish`. It locates the variable with a `(void *)` pointer and calls `publish` with this address. 
+
+### `SendPointer(channel, pointer)`
+
+Sends the value of a variable located at specified `pointer`. The `pointer` is applicable to constructed types like arrays and objects (including `String`'s)
+
+- **Channel**: One of the channels you **have defined** with `AddChannel`.
+- **Pointer**: Pointer to data you wish to send. Type of data should match your channel definition.
+
+`SendPointer` is equivalent to `publish`, but is maintained for consistency with `Send`.
+
+
+### `listenTo(channel, response)`
+
+When data arrives at the specified `channel`, call the `response` function with that data. You only need to call it once per channel, and the node will keep listening.
+
+- **Channel**: One of the channels you **have defined** with `AddChannel`.
+- **Response**: A function defined as `(void* payload) -> void`. It will receive the **pointer to** the payload when a payload is available.
+
+> **Caveat**
+> 
+> The response is handled each time when `update()` is called. Therefore, do not worry about RAM inconsistency unless you call `update` inside an ISR.
+>
+> `payload` will be destroyed once your `response` finishes executing. If you need it elsewhere, do a `memcpy` in your response function.
+
+
+### `registerChannel(channel, size)`
+
+Under the hood of `AddChannel`. Instead of taking the data directly, it requires an explicit passing of the data's `size`.
+
+### `publish(channel, payload)`
+
+Under the hood of `Send` and `SendPointer`. It takes the channel number and the payload (void pointer or `String`), and transmits them out.
+
+Internally, it checks whether `channel` points to a string-based channel and whether `payload` matches the specification. It **ignores the call** if there's a mismatch. However, it's **unable to check** the type correspondance of a statically-typed channel.
+

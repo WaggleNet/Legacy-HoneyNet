@@ -36,7 +36,7 @@
 				<key>FilenameExtension</key>
 				<string>html</string>
 				<key>FolderName</key>
-				<string>photos</string>
+				<string>router</string>
 				<key>HasCustomThemeStyle</key>
 				<true/>
 				<key>ImageFormat</key>
@@ -75,7 +75,7 @@
 						<string>Content Width.870px</string>
 						<string>Headers.Fjalla One</string>
 						<string>Navigation Overlay.Translucent Black</string>
-						<string>Sidebar.Right-hand Side</string>
+						<string>Sidebar.Hidden</string>
 						<string>Site Slogan.Fjalla One</string>
 						<string>Site Title Divider.Light</string>
 						<string>Site Title.Fjalla One</string>

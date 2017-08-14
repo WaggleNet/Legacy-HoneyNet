@@ -67,7 +67,7 @@ I&rsquo;ll do my best to get back to you with in 48 hours after receiving your e
 	<title>Contact Us | HoneyNet</title>
 
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" type="text/css" media="all" href="../rw_common/themes/Voyager/consolidated-1.css?v=477852033" />
+	<link rel="stylesheet" type="text/css" media="all" href="../rw_common/themes/Voyager/consolidated-1.css?rwcache=524413168" />
 		
 
 <link href='https://fonts.googleapis.com/css?family=Open Sans:400,700' rel='stylesheet' type='text/css'>
@@ -108,7 +108,7 @@ I&rsquo;ll do my best to get back to you with in 48 hours after receiving your e
 							<div id="social_badges"></div>
 							<!-- <h2 class="navigation_overlay_site_slogan">Get in touch with us...</h2> -->
 							<div id="main_navigation">
-								<ul><li><a href="../" rel="">Introduction</a></li><li><a href="../portfolio/" rel="" class="parent">Instruction Manual</a><ul><li><a href="../portfolio/nature-photos/" rel="">Hardware Setup</a></li><li><a href="../portfolio/railway-photos/" rel="">HoneyNode</a></li><li><a href="../portfolio/photos/" rel="">HoneyRouter</a></li><li><a href="../portfolio/city-life-photos/" rel="">Handling the Data</a></li></ul></li><li><a href="../sitemap/" rel="" class="parent">Developer's Notes</a><ul><li><a href="../sitemap/markdown/" rel="">Revision Log</a></li></ul></li><li><a href="./" rel="" id="current">Contact Us</a></li><li><a href="../about-us/" rel="">About Us</a></li></ul>
+								<ul><li><a href="../" rel="">Introduction</a></li><li><a href="../docs/" rel="" class="parent">Instruction Manual</a><ul><li><a href="../docs/setup/" rel="">Hardware Setup</a></li><li><a href="../docs/node/" rel="">HoneyNode</a></li><li><a href="../docs/router/" rel="">HoneyRouter</a></li><li><a href="../docs/handling/" rel="">Handling the Data</a></li></ul></li><li><a href="../sitemap/" rel="" class="parent">Developer's Notes</a><ul><li><a href="../sitemap/markdown/" rel="">Revision Log</a></li></ul></li><li><a href="./" rel="" id="current">Contact Us</a></li><li><a href="../about-us/" rel="">About Us</a></li></ul>
 							</div>
 				</div> <!-- container -->
 			</div> <!-- main_navigation -->
@@ -207,16 +207,16 @@ I&rsquo;ll do my best to get back to you with in 48 hours after receiving your e
 	</div>
 
 	<!-- jQuery 1.8 is included in the theme internally -->
-  <script src="../rw_common/themes/Voyager/js/jquery.min.js?v=477852033"></script>
+  <script src="../rw_common/themes/Voyager/js/jquery.min.js?rwcache=524413168"></script>
 
 	<!-- Base RapidWeaver javascript -->
-	<script async type="text/javascript" src="../rw_common/themes/Voyager/javascript.js?v=477852033"></script>
+	<script async type="text/javascript" src="../rw_common/themes/Voyager/javascript.js?rwcache=524413168"></script>
 
   <!-- Elixir theme specific javascript, along with jQuery Easing and a few other elements -->
-  <script src="../rw_common/themes/Voyager/js/elixir.js?v=477852033"></script>
+  <script src="../rw_common/themes/Voyager/js/elixir.js?rwcache=524413168"></script>
 
 	<!-- Style variations -->
-	<script type="text/javascript" src="../rw_common/themes/Voyager/js/sidebar/sidebar_hidden.js?v=477852033"></script>
+	<script type="text/javascript" src="../rw_common/themes/Voyager/js/sidebar/sidebar_hidden.js?rwcache=524413168"></script>
 		
 
 	<!-- User defined javascript -->

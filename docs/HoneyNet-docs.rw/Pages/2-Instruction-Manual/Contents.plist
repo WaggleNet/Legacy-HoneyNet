@@ -28,6 +28,35 @@
 					<key>Version</key>
 					<string>7.0</string>
 				</dict>
+				<key>PublishingManifests</key>
+				<dict>
+					<key>file:///Users/jimmy/Documents/Dev/Github/HoneyNet/docs/</key>
+					<dict>
+						<key>CreationDate</key>
+						<date>2017-08-14T14:19:28Z</date>
+						<key>DigestAlgorithm</key>
+						<string>MD5</string>
+						<key>PageDigests</key>
+						<dict>
+							<key>index.html</key>
+							<dict>
+								<key>Digest</key>
+								<data>
+								uLUVAXoHUZvB
+								qiRkwqSPpw==
+								</data>
+								<key>Size</key>
+								<integer>5607</integer>
+							</dict>
+						</dict>
+						<key>PageID</key>
+						<string>page3</string>
+						<key>SiteRoot</key>
+						<string>docs</string>
+						<key>Version</key>
+						<integer>3</integer>
+					</dict>
+				</dict>
 			</dict>
 			<key>Files</key>
 			<array>
