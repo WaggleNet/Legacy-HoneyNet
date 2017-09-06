@@ -19,6 +19,11 @@ void mode_ap_begin() {
 
 void mode_sta_begin() {
 	WiFi.mode(WIFI_STA);
+	auto sta_ssid = param::get_wifi_ssid();
+	auto sta_pwd = param::get_wifi_password();
+	WiFi.begin(sta_ssid.c_str(), sta_pwd.c_str());
+	Serial.print("Connecting to WiFi AP: ");
+	Serial.println(sta_ssid);
 	// Finally, print everything out...
 	print_wifi_info();
 }
@@ -48,6 +53,22 @@ void route_enable_mqtt() {
 	}
 }
 
+void route_switch_sta() {
+	if (server.hasArg("ssid") && server.hasArg("password")) {
+		param::set_wifi_ssid(server.arg("ssid"));
+		param::set_wifi_password(server.arg("password"));
+	}
+	server.send(200, "application/json", "{\"status\": \"success\"}");
+	mqtt_broker_enable = 0;
+	mode_sta_begin();
+}
+
+void route_switch_ap() {
+	server.send(200, "application/json", "{\"status\": \"success\"}");
+	mqtt_broker_enable = 0;
+	mode_ap_begin();
+}
+
 void route_disable_mqtt() {
 	mqtt_broker_enable = 0;
 	Serial.println(F("[MQTT] Broker disabled via REST."));
@@ -56,6 +77,8 @@ void route_disable_mqtt() {
 
 void setup_routes() {
 	server.on("/", route_root);
+	server.on("/wifi/sta", route_switch_sta);
+	server.on("/wifi/ap", route_switch_ap);
 	server.on("/mqtt/enable", route_enable_mqtt);
 	server.on("/mqtt/disable", route_disable_mqtt);
 }

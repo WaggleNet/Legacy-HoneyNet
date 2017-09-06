@@ -9,6 +9,7 @@
 #include "rf_ops.h"
 #include "lcd_ops.h"
 #include "config.h"
+#include "spiffs_params.h"
 
 extern ESP8266WebServer server;
 extern WiFiClient wclient;
