@@ -1,6 +1,6 @@
 #include "rf_ops.h"
 
-RF24 radio(4,5);
+RF24 radio(RF_PIN_CE, RF_PIN_CS);
 RF24Network network(radio);
 RF24Mesh mesh(radio,network);
 

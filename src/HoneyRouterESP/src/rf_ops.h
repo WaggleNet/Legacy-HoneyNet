@@ -9,6 +9,7 @@
 
 #include "wifi_ops.h"
 #include "mqtt_ops.h"
+#include "config.h"
 
 extern RF24 radio;
 extern RF24Network network;

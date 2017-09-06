@@ -1,5 +1,10 @@
 #include "wifi_ops.h"
 #include "rf_ops.h"
+#include "lcd_ops.h"
+#include <EEPROM.h>
+#include <FS.h>
+#include "config.h"
+#include "ota_ops.h"
 
 struct sensors_t {
     uint8_t temperature;
@@ -23,8 +28,13 @@ uint32_t displayTimer = 0;
 void setup() {
 	Serial.begin(115200);
 	Serial.println();
+    EEPROM.begin(128);
+    SPIFFS.begin();
+    display_init();
 	radio_init();
 	wifi_init();
+    print_mqtt_info();
+    ota_init();
 
 	registerChannel(CH_TIMER, sizeof(uint32_t));
 	registerChannel(CH_SENSORS, sizeof(sensors_t));
@@ -35,11 +45,13 @@ void setup() {
 void loop() {
 	radio_update();
 	wifi_update();
-	if(millis() - displayTimer > 20000){
+	if(millis() - displayTimer > 10000){
 		displayTimer = millis();
 		print_assigned_addresses();
 		print_wifi_info();
+        print_mqtt_info();
 		mqtt_refresh_state();
 	}
 	mqtt_loop();
+    ota_update();
 }

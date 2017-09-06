@@ -24,7 +24,21 @@ void mqtt_refresh_state() {
             Serial.println(F("[MQTT] Connection failed"));
             mqtt_on = 0;
         }
+    } else if (!mqtt_broker_enable && mqtt_on) {
+        mqclient.disconnect();
     }
+    if (mqtt_on && !mqclient.connected()) mqtt_on = 0;
+}
+
+void print_mqtt_info() {
+    display_clear_line(2, 3);
+    display.setTextWrap(false);
+    display.print("MQTT:");
+    if (mqtt_broker_enable) {
+        display.print("On,");
+        display.println(mqtt_on ? "OK" : "Wait");
+        display.println(mqtt_broker_address);
+    } else display.println("Off");
 }
 
 void mqtt_loop() {
