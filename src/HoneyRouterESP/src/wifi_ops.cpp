@@ -9,7 +9,11 @@ WiFiClient wclient;
 #define ssid "esp_mesh_master_demo"
 #define password "12345678"
 
-void mode_ap_begin() {
+void mode_ap_begin(boolean persist = false) {
+	if (persist) {
+		EEPROM.write(EE_WIFI_MODE, WIFI_MODE_AP);
+		EEPROM.commit();
+	}
 	WiFi.mode(WIFI_AP);
 	WiFi.softAP(ssid, password);
 	auto myIP = WiFi.softAPIP();
@@ -17,13 +21,19 @@ void mode_ap_begin() {
 	print_wifi_info();
 }
 
-void mode_sta_begin() {
+void mode_sta_begin(boolean persist = false) {
+	if (persist) {
+		EEPROM.write(EE_WIFI_MODE, WIFI_MODE_STA);
+		EEPROM.commit();
+	}
 	WiFi.mode(WIFI_STA);
 	auto sta_ssid = param::get_wifi_ssid();
 	auto sta_pwd = param::get_wifi_password();
 	WiFi.begin(sta_ssid.c_str(), sta_pwd.c_str());
 	Serial.print("Connecting to WiFi AP: ");
 	Serial.println(sta_ssid);
+	Serial.print("With password: ");
+	Serial.println(sta_pwd);
 	// Finally, print everything out...
 	print_wifi_info();
 }
@@ -60,13 +70,13 @@ void route_switch_sta() {
 	}
 	server.send(200, "application/json", "{\"status\": \"success\"}");
 	mqtt_broker_enable = 0;
-	mode_sta_begin();
+	mode_sta_begin(true);
 }
 
 void route_switch_ap() {
 	server.send(200, "application/json", "{\"status\": \"success\"}");
 	mqtt_broker_enable = 0;
-	mode_ap_begin();
+	mode_ap_begin(true);
 }
 
 void route_disable_mqtt() {
@@ -85,6 +95,22 @@ void setup_routes() {
 
 void wifi_init() {
 	Serial.println(F("[Wifi] Configuring access point..."));
+	display.clearDisplay();
+	display.setCursor(5,8);
+	display.println("PRESS BUTTON");
+	display.println("To force into AP mode.");
+	display.display();
+	auto timeout = millis() + 2000;
+	while (millis() <= timeout) {
+		if (digitalRead(SWITCH_PIN) == LOW) {
+			EEPROM.write(EE_WIFI_MODE, WIFI_MODE_AP);
+			EEPROM.commit();
+			delay(200);
+			break;
+		}
+	}
+	display.clearDisplay();
+	display.display();
 	uint8_t stored_mode = EEPROM.read(EE_WIFI_MODE);
 	switch (stored_mode) {
 		case WIFI_MODE_AP:
@@ -115,6 +141,7 @@ void print_wifi_info() {
 		display.println(F("AP Mode"));
 		display.println(WiFi.softAPIP());
 		Serial.print(F("[Wifi] SoftAP, IP: "));
+		Serial.println(WiFi.softAPIP());
 	}
 	else {
 		display.println(WiFi.SSID());
@@ -125,6 +152,7 @@ void print_wifi_info() {
 		} else {
 			Serial.println(F("[Wifi] Status: Disconnected"));
 			display.println("!Disconnected!");
+			WiFi.reconnect();
 		}
 	}
 	Serial.println(F("[Wifi] ********************************"));
