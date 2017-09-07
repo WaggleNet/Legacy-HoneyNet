@@ -18,6 +18,10 @@
 #define RF_PIN_CE 4
 #define RF_PIN_CS 5
 
+// Set-up
+
+#define RF_CHANNEL 123
+
 // Constants
 
 #define WIFI_MODE_AP 0

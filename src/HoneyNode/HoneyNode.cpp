@@ -7,7 +7,7 @@ HoneyNode::HoneyNode(uint8_t CE_pin, uint8_t CS_pin)
 void HoneyNode::begin() {
     serialSetID();
     Serial.println(F("Connecting..."));
-    mesh.begin(63, RF24_2MBPS);
+    mesh.begin(123, RF24_2MBPS);
 }
 
 void HoneyNode::serialSetID() {

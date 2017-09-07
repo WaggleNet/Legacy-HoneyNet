@@ -14,7 +14,7 @@ void radio_init(uint8_t node_id) {
     radio.setPALevel(RF24_PA_MAX);
     mesh.setNodeID(node_id);
     Serial.println("[Radio] Configuring mesh network...");
-	mesh.begin(63, RF24_2MBPS);
+	mesh.begin(RF_CHANNEL, RF24_2MBPS);
     Serial.println("[Radio] Mesh network configuration complete");
 }
 
