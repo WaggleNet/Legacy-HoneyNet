@@ -45,6 +45,19 @@ void HoneyNode::update() {
 void HoneyNode::registerChannel(uint8_t channel, uint8_t size) {
     if (channel >=64) channel -= 64;
     registry[channel] = size;
+    // Send the channel information to router
+    channel_t ch;
+    ch.ch_id = channel;
+    ch.size = size;
+    Serial.print("Registering ch#");
+    Serial.print(channel);
+    Serial.print(" with size ");
+    Serial.print(size);
+    Serial.print("...");
+    uint8_t flag = 1;
+    while (flag > 0)
+        flag = write(&ch, 64, sizeof(ch));
+    Serial.println("Done!");
 }
 
 uint8_t HoneyNode::write(void *payload, uint8_t ch, uint8_t len) {

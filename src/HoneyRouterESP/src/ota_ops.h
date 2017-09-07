@@ -6,7 +6,9 @@ void ota_init() {
     ArduinoOTA.onStart([]() {
         display.clearDisplay();
         display.setCursor(0, 0);
+        display.setTextColor(WHITE, BLACK);
         display.println("OTA Update");
+        display.setTextColor(BLACK, WHITE);
         display.display();
     });
     ArduinoOTA.onEnd([]() {

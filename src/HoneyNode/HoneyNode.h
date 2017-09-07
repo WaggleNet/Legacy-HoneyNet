@@ -13,6 +13,13 @@ typedef void (* handlerFunc)(void* args);
 #define SendPointer(CH, CONT) publish(CH, CONT)
 #define Print(CH, CONT) publish(CH, CONT)
 
+struct channel_t {
+    // Using 16-bit channel number is to comply
+    // with the alignment on ESP8266 (16-bit).
+    uint16_t ch_id;
+    uint16_t size;
+};
+
 class HoneyNode {
     // The Infra
     RF24 radio;
