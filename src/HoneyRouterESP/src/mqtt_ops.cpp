@@ -33,7 +33,9 @@ void mqtt_refresh_state() {
 void print_mqtt_info() {
     display_clear_line(2, 3);
     display.setTextWrap(false);
-    display.print("MQTT:");
+    display.setTextColor(WHITE, BLACK);
+    display.print("MQTT>");
+    display.setTextColor(BLACK, WHITE);
     if (mqtt_broker_enable) {
         display.print("On,");
         display.println(mqtt_on ? "OK" : "Wait");

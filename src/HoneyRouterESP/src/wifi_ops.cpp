@@ -136,7 +136,9 @@ void print_wifi_info() {
 	display_clear_line(0, 1);
 	display.setTextWrap(false);
 	Serial.println(F("[Wifi] ********WiFi Information********"));
-	display.print(F("WIFI:"));
+	display.setTextColor(WHITE, BLACK);
+    display.print("WIFI>");
+    display.setTextColor(BLACK, WHITE);
 	if (WiFi.getMode() == WIFI_AP) {
 		display.println(F("AP Mode"));
 		display.println(WiFi.softAPIP());

@@ -1,4 +1,5 @@
 #pragma once
+#include "Arduino.h"
 
 #include "wemos_pins.h"
 
@@ -21,3 +22,5 @@
 
 #define WIFI_MODE_AP 0
 #define WIFI_MODE_STA 1
+
+String getContentType(String);
