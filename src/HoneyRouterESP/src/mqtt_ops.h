@@ -9,6 +9,7 @@
 
 extern PubSubClient mqclient;
 extern String base_topic;
+extern uint8_t mqtt_on;
 
 void mqtt_refresh_state();
 void print_mqtt_info();

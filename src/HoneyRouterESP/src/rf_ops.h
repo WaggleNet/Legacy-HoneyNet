@@ -20,6 +20,7 @@ extern uint32_t displayTimer;
 extern uint8_t registry[32];
 
 extern uint8_t channel_counter;
+extern uint16_t trfc_counter;
 
 struct channel_t {
     // Using 16-bit channel number is to comply
