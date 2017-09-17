@@ -16,6 +16,8 @@ extern ESP8266WebServer server;
 extern WiFiClient wclient;
 
 extern String mqtt_broker_address;
+extern String mqtt_username;
+extern String mqtt_password;
 extern uint8_t mqtt_broker_enable;
 
 void mode_ap_begin(boolean);

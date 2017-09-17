@@ -1,6 +1,8 @@
 #include "wifi_ops.h"
 
 String mqtt_broker_address = "";
+String mqtt_username = "";
+String mqtt_password = "";
 uint8_t mqtt_broker_enable = 0;
 
 ESP8266WebServer server(80);
@@ -99,8 +101,15 @@ String root_processor(const String& key) {
 
 void route_enable_mqtt() {
 	if (server.hasArg("address")) {
-		mqtt_broker_address = String(server.arg("address"));
+		mqtt_broker_address = server.arg("address");
 		mqtt_broker_enable = 1;
+		if (server.hasArg("username")) {
+			mqtt_username = server.arg("username");
+			mqtt_password = server.arg("password");
+		} else {
+			mqtt_username = "";
+			mqtt_password = "";
+		}
 		print_mqtt_info();
 		server.send(200, "application/json", "{\"status\": \"success\"}");
 	} else {

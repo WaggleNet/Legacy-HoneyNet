@@ -7,11 +7,21 @@ String esp_chip_id(ESP.getChipId(), HEX);
 String base_topic = String("esp-mesh/")+esp_chip_id+"/";
 String node_name = String("esp-") + esp_chip_id;
 
+boolean process_connection() {
+    if (mqtt_username.length())
+        return mqclient.connect(
+            node_name.c_str(),
+            mqtt_username.c_str(),
+            mqtt_password.c_str()
+        );
+    else return mqclient.connect(node_name.c_str());
+}
+
 void mqtt_refresh_state() {
     if (mqtt_broker_enable && !mqtt_on) {
         mqtt_on = 1;
         mqclient = PubSubClient(mqtt_broker_address.c_str(), 1883, mqtt_callback, wclient);
-        if (mqclient.connect(node_name.c_str())) {
+        if (process_connection()) {
             Serial.print(F("[MQTT] Connected to "));
             Serial.println(mqtt_broker_address);
             Serial.print("Base topic: ");

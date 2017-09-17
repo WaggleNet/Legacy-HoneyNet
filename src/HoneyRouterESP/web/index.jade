@@ -73,6 +73,12 @@ html
                                 .form-group
                                     label(for='address') Broker Address
                                     input.form-control(type='text' name='address')
+                                .form-group
+                                    label(for='username') MQTT Username
+                                    input.form-control(type='text' name='username')
+                                .form-group
+                                    label(for='password') Password
+                                    input.form-control(type='password' name='password')
                                 button.btn.btn-primary(type='submit') Connect
                             hr
                             form(action='/mqtt/disable' target='_blank')
