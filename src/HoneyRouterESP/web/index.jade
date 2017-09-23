@@ -1,0 +1,89 @@
+html
+    head
+        link(rel='stylesheet', href='/main.css')
+        link(rel='stylesheet', href='/res/bootstrap.min.css')
+    body
+        nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+            a.navbar-brand(href='#')
+                img(src='/res/illini.png')
+                |  HoneyRouter
+            ul.navbar-nav.mr-auto
+                li.nav-item.active
+                    a(href='#').nav-link='Status'
+        .container
+            .row
+                .col.col-12.col-lg-4.p-3
+                    .card.bg-dark.text-white
+                        .card-header Wi-Fi Connection
+                        .card-body
+                            h4 %CONN_MODE%
+                            small Status: %CONN_STATUS%
+                            hr
+                            div
+                                strong SSID: 
+                                | %CONN_SSID%
+                            div
+                                strong IP Address: 
+                                | %CONN_IP%
+                        .card-body.bg-light.text-dark
+                            form(action='/wifi/sta' target='_blank')
+                                .form-group
+                                    label(for='ssid') Network Name
+                                    input.form-control(type='text' name='ssid')
+                                .form-group
+                                    label(for='password') Password
+                                    input.form-control(type='password' name='password')
+                                button.btn.btn-primary(type='submit') Connect
+                            hr
+                            form(action='/wifi/ap' target='_blank')
+                                p ... Or make me a Wi-Fi Access Point:
+                                button.btn.btn-primary(type='submit') AP Mode
+                .col.col-12.col-lg-4.p-3
+                    .card.bg-secondary.text-white
+                        .card-header HoneyNet
+                        .card-body
+                            h4 Mesh Operating
+                            small PA Power: MAX
+                            hr
+                            div
+                                strong Registered Channels: 
+                                | %RF_CHANNELS%
+                            div
+                                strong Registered Nodes:
+                                | %RF_ADDRESSES%
+                        .card-body.bg-light.text-dark
+                            h5 Address Book
+                            | %RF_ADDRLIST%
+                        .card-body
+                            h1 %RF_TRAFFIC%
+                                small=" msgs"
+                            p Since last reported
+                .col.col-12.col-lg-4.p-3
+                    .card.bg-success.text-white
+                        .card-header MQTT Gateway
+                        .card-body
+                            h4 %MQTT_MODE%
+                            small Status: %MQTT_STATUS%
+                            hr
+                            div
+                                strong Broker Address: 
+                                | %MQTT_ADDR%
+                        .card-body.bg-light.text-dark
+                            form(action='/mqtt/enable' target='_blank')
+                                .form-group
+                                    label(for='address') Broker Address
+                                    input.form-control(type='text' name='address')
+                                .form-group
+                                    label(for='username') MQTT Username
+                                    input.form-control(type='text' name='username')
+                                .form-group
+                                    label(for='password') Password
+                                    input.form-control(type='password' name='password')
+                                button.btn.btn-primary(type='submit') Connect
+                            hr
+                            form(action='/mqtt/disable' target='_blank')
+                                p ... Or turn it off.
+                                button.btn.btn-primary(type='submit') Disconnect
+        script(src='/main.js')
+        //- script(src='/res/jquery.min.js')
+        //- script(src='/res/bootstrap.min.js')

@@ -5,25 +5,34 @@ HoneyNode::HoneyNode(uint8_t CE_pin, uint8_t CS_pin)
 }
 
 void HoneyNode::begin() {
-    serialSetID();
-    Serial.println(F("Connecting..."));
-    mesh.begin(63, RF24_2MBPS);
+    auto new_id = serialSetID();
+    begin(new_id);
 }
 
-void HoneyNode::serialSetID() {
-    nodeID = EEPROM.read(0);
-    if (nodeID > 0 && nodeID < 254) {
-        mesh.setNodeID(nodeID);
-    } else {
-        Serial.println(F("Address not set. Please set address"));
-        while (!mesh.getNodeID()) {
-            nodeID = Serial.parseInt();
-            mesh.setNodeID(nodeID);
-            EEPROM.write(0, nodeID);
-        }
-    }
+void HoneyNode::begin(uint8_t nodeID) {
+    begin(nodeID, 123);
+}
+
+void HoneyNode::begin(uint8_t nodeID, uint8_t radio_channel) {
     Serial.print("Node ID set to ");
     Serial.println(nodeID);
+    this -> nodeID = nodeID;
+
+    mesh.setNodeID(nodeID);
+
+    Serial.println(F("Connecting to Mesh..."));
+    mesh.begin(radio_channel, RF24_2MBPS);
+}
+
+uint8_t HoneyNode::serialSetID() {
+    // Deprecated; User should manage storage of NodeID himself.
+    uint8_t node_id = EEPROM.read(0);
+    while (!(node_id > 0 && node_id < 254)) {
+        Serial.println(F("Address not set. Please set address"));
+        node_id = Serial.parseInt();
+        EEPROM.write(0, node_id);
+    }
+    return node_id;
 }
 
 void HoneyNode::update() {
@@ -45,6 +54,19 @@ void HoneyNode::update() {
 void HoneyNode::registerChannel(uint8_t channel, uint8_t size) {
     if (channel >=64) channel -= 64;
     registry[channel] = size;
+    // Send the channel information to router
+    channel_t ch;
+    ch.ch_id = channel;
+    ch.size = size;
+    Serial.print("Registering ch#");
+    Serial.print(channel);
+    Serial.print(" with size ");
+    Serial.print(size);
+    Serial.print("...");
+    uint8_t flag = 1;
+    while (flag > 0)
+        flag = write(&ch, 64, sizeof(ch));
+    Serial.println("Done!");
 }
 
 uint8_t HoneyNode::write(void *payload, uint8_t ch, uint8_t len) {

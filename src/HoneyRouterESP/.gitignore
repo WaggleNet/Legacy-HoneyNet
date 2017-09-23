@@ -2,3 +2,6 @@
 .piolibdeps
 .clang_complete
 .gcc-flags.json
+.sass-cache
+.vscode/c_cpp_properties.json
+.vscode/
