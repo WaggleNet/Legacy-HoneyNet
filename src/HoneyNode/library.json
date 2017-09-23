@@ -1,0 +1,27 @@
+{
+  "name": "HoneyNode",
+  "keywords": "mesh, iot, nrf24l01",
+  "description": "HoneyNode is a sweet and managed mesh networking library backed by RF24.",
+  "include": "src/HoneyNode",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/streamliner18/HoneyNet"
+  },
+  "authors": [
+      {
+          "name": "Jimmy He",
+          "email": "miaoh2@illinois.edu"
+      }
+  ],
+  "dependencies":
+  [
+    {
+      "name": "RF24Mesh",
+      "frameworks": "arduino"
+    }
+  ],
+  "version": "0.1",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
