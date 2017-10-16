@@ -29,12 +29,36 @@ namespace param {
         return fs::read_str("/wifi/password");
     }
 
+    String get_mqtt_address() {
+        return fs::read_str("/mqtt/address");
+    }
+
+    String get_mqtt_username() {
+        return fs::read_str("/mqtt/username");
+    }
+
+    String get_mqtt_password() {
+        return fs::read_str("/mqtt/password");
+    }
+
     void set_wifi_ssid(String s) {
         return fs::write_str("/wifi/ssid", s);
     }
 
     void set_wifi_password(String s) {
         return fs::write_str("/wifi/password", s);
+    }
+
+    void set_mqtt_address(String s) {
+        return fs::write_str("/mqtt/address", s);
+    }
+
+    void set_mqtt_username(String s) {
+        return fs::write_str("/mqtt/username", s);
+    }
+
+    void set_mqtt_password(String s) {
+        return fs::write_str("/mqtt/password", s);
     }
 
 }
