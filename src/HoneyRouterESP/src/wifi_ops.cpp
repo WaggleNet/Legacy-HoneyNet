@@ -1,10 +1,5 @@
 #include "wifi_ops.h"
 
-String mqtt_broker_address = "";
-String mqtt_username = "";
-String mqtt_password = "";
-uint8_t mqtt_broker_enable = 0;
-
 ESP8266WebServer server(80);
 WiFiClient wclient;
 
@@ -32,7 +27,9 @@ void mode_sta_begin(boolean persist = false) {
 	WiFi.mode(WIFI_STA);
 	auto sta_ssid = param::get_wifi_ssid();
 	auto sta_pwd = param::get_wifi_password();
-	WiFi.begin(sta_ssid.c_str(), sta_pwd.c_str());
+	if (sta_pwd.length() == 0)
+		WiFi.begin(sta_ssid.c_str());
+	else WiFi.begin(sta_ssid.c_str(), sta_pwd.c_str());
 	Serial.print("Connecting to WiFi AP: ");
 	Serial.println(sta_ssid);
 	Serial.print("With password: ");
@@ -110,6 +107,9 @@ void route_enable_mqtt() {
 			mqtt_username = "";
 			mqtt_password = "";
 		}
+		param::set_mqtt_address(mqtt_broker_address);
+		param::set_mqtt_username(mqtt_username);
+		param::set_mqtt_password(mqtt_password);
 		print_mqtt_info();
 		server.send(200, "application/json", "{\"status\": \"success\"}");
 	} else {
@@ -123,18 +123,19 @@ void route_switch_sta() {
 		param::set_wifi_password(server.arg("password"));
 	}
 	server.send(200, "application/json", "{\"status\": \"success\"}");
-	mqtt_broker_enable = 0;
+	// mqtt_broker_enable = 0;
 	mode_sta_begin(true);
 }
 
 void route_switch_ap() {
 	server.send(200, "application/json", "{\"status\": \"success\"}");
-	mqtt_broker_enable = 0;
+	// mqtt_broker_enable = 0;
 	mode_ap_begin(true);
 }
 
 void route_disable_mqtt() {
 	mqtt_broker_enable = 0;
+	param::set_mqtt_address("");
 	Serial.println(F("[MQTT] Broker disabled via REST."));
 	server.send(200, "application/json", "{\"status\": \"success\"}");
 }
@@ -205,6 +206,8 @@ void print_wifi_info() {
 	display_clear_line(0, 1);
 	display.setTextWrap(false);
 	Serial.println(F("[Wifi] ********WiFi Information********"));
+	Serial.println(WiFi.macAddress());
+	Serial.println(WiFi.softAPmacAddress());
 	display.setTextColor(WHITE, BLACK);
     display.print("WIFI>");
     display.setTextColor(BLACK, WHITE);
